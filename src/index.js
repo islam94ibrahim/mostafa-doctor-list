@@ -130,31 +130,33 @@ class App extends React.Component {
     }
 
     onDoctorInputSubmit = () => {
-        this.setState(prevState => {
-            const tasks = {
-                ...prevState.tasks,
-                [`task-${prevState.doctorCounter}`]: { id: `task-${prevState.doctorCounter}`, content: prevState.doctorInput },
-                [`task-${prevState.doctorCounter + 1}`]: { id: `task-${prevState.doctorCounter + 1}`, content: prevState.doctorInput },
-            }
-            const list = {
-                ...prevState.columns['column-1'],
-                'taskIds': [
-                    ...prevState.columns['column-1']['taskIds'],
-                    `task-${prevState.doctorCounter}`,
-                    `task-${prevState.doctorCounter + 1}`
-                ]
-            }
+        if (this.state.doctorInput !== '') {
+            this.setState(prevState => {
+                const tasks = {
+                    ...prevState.tasks,
+                    [`task-${prevState.doctorCounter}`]: { id: `task-${prevState.doctorCounter}`, content: prevState.doctorInput },
+                    [`task-${prevState.doctorCounter + 1}`]: { id: `task-${prevState.doctorCounter + 1}`, content: prevState.doctorInput },
+                }
+                const list = {
+                    ...prevState.columns['column-1'],
+                    'taskIds': [
+                        ...prevState.columns['column-1']['taskIds'],
+                        `task-${prevState.doctorCounter}`,
+                        `task-${prevState.doctorCounter + 1}`
+                    ]
+                }
 
-            return {
-                tasks: tasks,
-                columns: {
-                    ...prevState.columns,
-                    'column-1': list
-                },
-                doctorInput: '',
-                doctorCounter: prevState.doctorCounter + 2
-            }
-        })
+                return {
+                    tasks: tasks,
+                    columns: {
+                        ...prevState.columns,
+                        'column-1': list
+                    },
+                    doctorInput: '',
+                    doctorCounter: prevState.doctorCounter + 2
+                }
+            })
+        }
     }
 
     onInputKeyPress = (event) => {
@@ -173,7 +175,6 @@ class App extends React.Component {
                 }
             }
 
-            console.log(columns)
             return {columns}
         })
     }
